@@ -6,6 +6,9 @@ import {
   Modal,
 } from "../components/ReComponents";
 import ConditionMonitor from "../components/ConditionMonitor";
+import ProjectCard from "../components/ProjectCard";
+import ProjectDetails from "../components/ProjectDetails";
+import { useGithubProjects } from "../hooks/useGithubProjects";
 
 const PortfolioInterface = () => {
   const location = useLocation();
@@ -14,36 +17,24 @@ const PortfolioInterface = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
   const [currentSection, setCurrentSection] = useState("about");
+  const [showMenu, setShowMenu] = useState(false);
 
-  const projects = [
-    { id: 1, name: "Project 1" },
-    { id: 2, name: "Project 2" },
-    { id: 3, name: "Project 3" },
-    { id: 4, name: "Project 4" },
-    { id: 5, name: "Project 5" },
-    { id: 6, name: "Project 6" },
-  ];
-
-  const defaultItemImage =
-    character.toLowerCase() === "leon" ? "lighter.webp" : "lockpick.webp";
+  const { projects, loading, error } = useGithubProjects("MatthieuLa");
 
   const handleSectionChange = (section) => {
     setCurrentSection(section);
     setSelectedProject(null);
+    setShowMenu(false);
   };
 
   const handleProjectSelect = (project) => {
     setSelectedProject(project);
+    setCurrentSection("project");
   };
 
   const renderContent = () => {
     if (selectedProject) {
-      return (
-        <div>
-          <h2 className="text-xl mb-4">{selectedProject.name}</h2>
-          <p className="font-mono">{selectedProject.id}</p>
-        </div>
-      );
+      return <ProjectDetails project={selectedProject} />;
     }
 
     switch (currentSection) {
@@ -58,116 +49,156 @@ const PortfolioInterface = () => {
             </p>
           </div>
         );
-      case "skills":
-        return (
-          <div>
-            <h2 className="text-xl mb-4">COMPÉTENCES</h2>
-            <p className="font-mono">Compétences</p>
-          </div>
-        );
-      case "contact":
-        return (
-          <div>
-            <h2 className="text-xl mb-4">CONTACT</h2>
-            <p className="font-mono">VContact form</p>
-          </div>
-        );
       default:
         return null;
     }
   };
 
+  const renderNavButtons = () => (
+    <>
+      <MenuButton
+        active={currentSection === "about" && !selectedProject}
+        onClick={() => handleSectionChange("about")}
+        className="text-sm"
+      >
+        A PROPOS
+      </MenuButton>
+      <MenuButton
+        active={currentSection === "skills" && !selectedProject}
+        onClick={() => handleSectionChange("skills")}
+        className="text-sm"
+      >
+        COMPETENCES
+      </MenuButton>
+      <MenuButton
+        active={currentSection === "contact" && !selectedProject}
+        onClick={() => handleSectionChange("contact")}
+        className="text-sm"
+      >
+        CONTACT
+      </MenuButton>
+      <MenuButton onClick={() => setShowOptions(true)} className="text-sm">
+        OPTIONS
+      </MenuButton>
+      <MenuButton onClick={() => navigate("/")} className="text-sm">
+        EXIT
+      </MenuButton>
+    </>
+  );
+
+  const renderCharacterInfo = () => (
+    <BorderedContainer className="bg-gray-900 p-0">
+      <div className="flex flex-col items-center justify-center p-2">
+        <span className="text-sm mb-1">{username.toUpperCase()}</span>
+        <div className="w-20 h-20 md:w-24 md:h-24 bg-gray-800 border border-gray-600">
+          <img
+            src={`/${character.toLowerCase()}.webp`}
+            alt={character}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </BorderedContainer>
+  );
+
+  const renderConditionMonitor = () => (
+    <BorderedContainer className="bg-gray-900 p-0">
+      <ConditionMonitor />
+    </BorderedContainer>
+  );
+
   return (
-    <div className="bg-black text-gray-300 min-h-screen flex items-center p-4 font-mono">
-      <div className="max-w-7xl mx-auto w-full">
-        <BorderedContainer className="grid grid-cols-12 gap-4">
-          {/* Top Navigation Bar - Modifié */}
-          <div className="col-span-12 flex justify-between items-center h-12 bg-gray-900 border-b border-gray-700">
-            <h1 className="text-red-700 text-2xl font-bold px-6">
-              RESIDENT FOLIO
-            </h1>
-            <div className="flex gap-2 px-4">
-              <MenuButton
-                active={currentSection === "about" && !selectedProject}
-                onClick={() => handleSectionChange("about")}
+    <div className="bg-black text-gray-300 min-h-screen font-mono">
+      <div className="container mx-auto p-2 md:p-4">
+        {/* Navbar */}
+        <BorderedContainer className="bg-gray-900 mb-2 p-0">
+          <div className="flex flex-col md:flex-row md:items-center justify-between p-2">
+            <div className="flex justify-between items-center">
+              <h1 className="text-red-700 text-xl md:text-2xl font-bold">
+                RESIDENT FOLIO
+              </h1>
+              <button
+                className="md:hidden"
+                onClick={() => setShowMenu(!showMenu)}
               >
-                A PROPOS
-              </MenuButton>
-              <MenuButton
-                active={currentSection === "skills" && !selectedProject}
-                onClick={() => handleSectionChange("skills")}
-              >
-                COMPETENCES
-              </MenuButton>
-              <MenuButton
-                active={currentSection === "contact" && !selectedProject}
-                onClick={() => handleSectionChange("contact")}
-              >
-                CONTACT
-              </MenuButton>
-              <MenuButton onClick={() => setShowOptions(true)}>
-                OPTIONS
-              </MenuButton>
-              <MenuButton onClick={() => navigate("/")}>EXIT</MenuButton>
+                ☰
+              </button>
+            </div>
+            <div
+              className={`${
+                showMenu ? "flex" : "hidden"
+              } md:flex flex-col md:flex-row gap-2 mt-2 md:mt-0`}
+            >
+              {renderNavButtons()}
             </div>
           </div>
+        </BorderedContainer>
 
-          {/* Left Column - Avatar, title & Status */}
-
-          <div className="col-span-3 space-y-4">
-            <BorderedContainer className="bg-gray-900">
-              <div className="flex flex-col items-center">
-                <span className="text-sm mb-1">{username.toUpperCase()}</span>
-                <div className="w-24 h-24 bg-gray-800 border border-gray-600">
-                  <img
-                    src={`/${character.toLowerCase()}.webp`}
-                    alt={character}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            </BorderedContainer>
-            <BorderedContainer className="bg-gray-900">
-              <ConditionMonitor />
-            </BorderedContainer>
+        {/* Main Content */}
+        <div className="grid md:grid-cols-12 gap-2">
+          {/* Left Column - Mobile Top Row */}
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-1 md:col-span-2">
+            {renderCharacterInfo()}
+            {renderConditionMonitor()}
           </div>
 
-          {/* Main Content Area */}
-          <div className="col-span-6">
-            <BorderedContainer className="h-full min-h-[500px] bg-gray-900">
-              <div className="h-full bg-gray-800 p-4 border border-gray-600">
-                {renderContent()}
-              </div>
-            </BorderedContainer>
-          </div>
+          {/* Center Content */}
+          <BorderedContainer className="md:col-span-8 bg-gray-900 p-0">
+            <div className="h-full bg-gray-800 p-4 border border-gray-600">
+              {renderContent()}
+            </div>
+          </BorderedContainer>
 
-          {/* Right Column - projects Grid */}
-          <div className="col-span-3 space-y-4">
-            <BorderedContainer className="bg-gray-900">
-              <div className="flex justify-center items-center h-20">
+          {/* Right Column */}
+          <div className="md:col-span-2">
+            {/* Item Container - Desktop Only */}
+            <BorderedContainer className="hidden md:block bg-gray-900 mb-2 p-0">
+              <div className="flex justify-center items-center aspect-square">
                 <img
-                  src={`/${defaultItemImage}`}
+                  src={`/${
+                    character.toLowerCase() === "leon"
+                      ? "lighter.webp"
+                      : "lockpick.webp"
+                  }`}
                   alt="Default item"
-                  className="h-full object-contain"
+                  className="h-4/5 object-contain"
                 />
               </div>
             </BorderedContainer>
-            <BorderedContainer className="bg-gray-900">
-              <div className="grid grid-cols-2 gap-2">
-                {projects.map((project) => (
-                  <button
-                    key={project.id}
-                    onClick={() => handleProjectSelect(project)}
-                    className="bg-gray-800 border border-gray-600 h-16 hover:bg-gray-700 transition-colors"
-                  />
-                ))}
+
+            {/* Projects Grid */}
+            <BorderedContainer className="bg-gray-900 p-0">
+              <div className="grid grid-cols-3 md:grid-cols-2 gap-0">
+                {loading
+                  ? [...Array(6)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="aspect-square bg-gray-800 border border-gray-600 animate-pulse"
+                      />
+                    ))
+                  : error
+                  ? [...Array(6)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="aspect-square bg-gray-800 border border-gray-600 flex items-center justify-center text-xs text-red-500"
+                      >
+                        Error
+                      </div>
+                    ))
+                  : projects.map((project) => (
+                      <div key={project.id}>
+                        <ProjectCard
+                          project={project}
+                          onClick={handleProjectSelect}
+                        />
+                      </div>
+                    ))}
               </div>
             </BorderedContainer>
           </div>
-        </BorderedContainer>
+        </div>
       </div>
 
-      {/* Options Modal */}
       <Modal
         isOpen={showOptions}
         onClose={() => setShowOptions(false)}
