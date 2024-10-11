@@ -90,7 +90,7 @@ const PortfolioInterface = () => {
     <BorderedContainer className="bg-gray-900 p-0">
       <div className="flex flex-col items-center justify-center p-2">
         <span className="text-sm mb-1">{username.toUpperCase()}</span>
-        <div className="w-20 h-20 md:w-24 md:h-24 bg-gray-800 border border-gray-600">
+        <div className="w-20 h-20 lg:w-24 lg:h-24 bg-gray-800 border border-gray-600">
           <img
             src={`/${character.toLowerCase()}.webp`}
             alt={character}
@@ -109,16 +109,16 @@ const PortfolioInterface = () => {
 
   return (
     <div className="bg-black text-gray-300 min-h-screen font-mono">
-      <div className="container mx-auto p-2 md:p-4">
+      <div className="container mx-auto p-2 lg:p-4">
         {/* Navbar */}
         <BorderedContainer className="bg-gray-900 mb-2 p-0">
-          <div className="flex flex-col md:flex-row md:items-center justify-between p-2">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between p-2">
             <div className="flex justify-between items-center">
-              <h1 className="text-red-700 text-xl md:text-2xl font-bold">
+              <h1 className="text-red-700 text-xl lg:text-2xl font-bold">
                 RESIDENT FOLIO
               </h1>
               <button
-                className="md:hidden"
+                className="lg:hidden"
                 onClick={() => setShowMenu(!showMenu)}
               >
                 ☰
@@ -127,7 +127,7 @@ const PortfolioInterface = () => {
             <div
               className={`${
                 showMenu ? "flex" : "hidden"
-              } md:flex flex-col md:flex-row gap-2 mt-2 md:mt-0`}
+              } lg:flex flex-col lg:flex-row gap-2 mt-2 lg:mt-0`}
             >
               {renderNavButtons()}
             </div>
@@ -135,24 +135,24 @@ const PortfolioInterface = () => {
         </BorderedContainer>
 
         {/* Main Content */}
-        <div className="grid md:grid-cols-12 gap-2">
+        <div className="grid lg:grid-cols-12 gap-2">
           {/* Left Column - Mobile Top Row */}
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-1 md:col-span-2">
+          <div className="grid grid-cols-2 gap-2 lg:grid-cols-1 lg:col-span-2">
             {renderCharacterInfo()}
             {renderConditionMonitor()}
           </div>
 
           {/* Center Content */}
-          <BorderedContainer className="md:col-span-8 bg-gray-900 p-0">
+          <BorderedContainer className="lg:col-span-8 bg-gray-900 p-0">
             <div className="h-full bg-gray-800 p-4 border border-gray-600">
               {renderContent()}
             </div>
           </BorderedContainer>
 
           {/* Right Column */}
-          <div className="md:col-span-2">
+          <div className="lg:col-span-2 max-h-[calc(100vh-8rem)] overflow-auto">
             {/* Item Container - Desktop Only */}
-            <BorderedContainer className="hidden md:block bg-gray-900 mb-2 p-0">
+            <BorderedContainer className="hidden lg:block bg-gray-900 mb-2 p-0">
               <div className="flex justify-center items-center aspect-square">
                 <img
                   src={`/${
@@ -168,25 +168,25 @@ const PortfolioInterface = () => {
 
             {/* Projects Grid */}
             <BorderedContainer className="bg-gray-900 p-0">
-              <div className="grid grid-cols-3 md:grid-cols-2 gap-0">
+              <div className="grid grid-cols-3 lg:grid-cols-2 gap-1 max-h-[60vh] lg:max-h-[calc(100vh-16rem)] overflow-y-auto">
                 {loading
                   ? [...Array(6)].map((_, i) => (
                       <div
                         key={i}
-                        className="aspect-square bg-gray-800 border border-gray-600 animate-pulse"
+                        className="h-24 lg:aspect-square bg-gray-800 border border-gray-600 animate-pulse"
                       />
                     ))
                   : error
                   ? [...Array(6)].map((_, i) => (
                       <div
                         key={i}
-                        className="aspect-square bg-gray-800 border border-gray-600 flex items-center justify-center text-xs text-red-500"
+                        className="h-24 lg:aspect-square bg-gray-800 border border-gray-600 flex items-center justify-center text-xs text-red-500"
                       >
                         Error
                       </div>
                     ))
                   : projects.map((project) => (
-                      <div key={project.id}>
+                      <div key={project.id} className="h-24 lg:h-auto">
                         <ProjectCard
                           project={project}
                           onClick={handleProjectSelect}
