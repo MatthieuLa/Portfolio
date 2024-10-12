@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  BorderedContainer,
-  MenuButton,
-  Modal,
-} from "../components/ReComponents";
-import ConditionMonitor from "../components/ConditionMonitor";
-import ProjectCard from "../components/ProjectCard";
-import ProjectDetails from "../components/ProjectDetails";
+  InventoryBorderedContainer,
+  InventoryMenuButton,
+  InventoryModal,
+  InventoryConditionMonitor,
+} from "../components/Inventory";
+import ProjectCard from "../components/Project/ProjectCard";
+import ProjectDetails from "../components/Project/ProjectDetails";
 import { useGithubProjects } from "../hooks/useGithubProjects";
 
 const PortfolioInterface = () => {
@@ -56,38 +56,41 @@ const PortfolioInterface = () => {
 
   const renderNavButtons = () => (
     <>
-      <MenuButton
+      <InventoryMenuButton
         active={currentSection === "about" && !selectedProject}
         onClick={() => handleSectionChange("about")}
         className="text-sm"
       >
         A PROPOS
-      </MenuButton>
-      <MenuButton
+      </InventoryMenuButton>
+      <InventoryMenuButton
         active={currentSection === "skills" && !selectedProject}
         onClick={() => handleSectionChange("skills")}
         className="text-sm"
       >
         COMPETENCES
-      </MenuButton>
-      <MenuButton
+      </InventoryMenuButton>
+      <InventoryMenuButton
         active={currentSection === "contact" && !selectedProject}
         onClick={() => handleSectionChange("contact")}
         className="text-sm"
       >
         CONTACT
-      </MenuButton>
-      <MenuButton onClick={() => setShowOptions(true)} className="text-sm">
+      </InventoryMenuButton>
+      <InventoryMenuButton
+        onClick={() => setShowOptions(true)}
+        className="text-sm"
+      >
         OPTIONS
-      </MenuButton>
-      <MenuButton onClick={() => navigate("/")} className="text-sm">
+      </InventoryMenuButton>
+      <InventoryMenuButton onClick={() => navigate("/")} className="text-sm">
         EXIT
-      </MenuButton>
+      </InventoryMenuButton>
     </>
   );
 
   const renderCharacterInfo = () => (
-    <BorderedContainer className="bg-gray-900 p-0">
+    <InventoryBorderedContainer className="bg-gray-900 p-0">
       <div className="flex flex-col items-center justify-center p-2">
         <span className="text-sm mb-1">{username.toUpperCase()}</span>
         <div className="w-20 h-20 lg:w-24 lg:h-24 bg-gray-800 border border-gray-600">
@@ -98,20 +101,20 @@ const PortfolioInterface = () => {
           />
         </div>
       </div>
-    </BorderedContainer>
+    </InventoryBorderedContainer>
   );
 
   const renderConditionMonitor = () => (
-    <BorderedContainer className="bg-gray-900 p-0">
-      <ConditionMonitor />
-    </BorderedContainer>
+    <InventoryBorderedContainer className="bg-gray-900 p-0">
+      <InventoryConditionMonitor />
+    </InventoryBorderedContainer>
   );
 
   return (
     <div className="bg-black text-gray-300 min-h-screen font-mono">
       <div className="container mx-auto p-2 lg:p-4">
         {/* Navbar */}
-        <BorderedContainer className="bg-gray-900 mb-2 p-0">
+        <InventoryBorderedContainer className="bg-gray-900 mb-2 p-0">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between p-2">
             <div className="flex justify-between items-center">
               <h1 className="text-red-700 text-xl lg:text-2xl font-bold">
@@ -132,7 +135,7 @@ const PortfolioInterface = () => {
               {renderNavButtons()}
             </div>
           </div>
-        </BorderedContainer>
+        </InventoryBorderedContainer>
 
         {/* Main Content */}
         <div className="grid lg:grid-cols-12 gap-2">
@@ -143,16 +146,16 @@ const PortfolioInterface = () => {
           </div>
 
           {/* Center Content */}
-          <BorderedContainer className="lg:col-span-8 bg-gray-900 p-0">
+          <InventoryBorderedContainer className="lg:col-span-8 bg-gray-900 p-0">
             <div className="h-full bg-gray-800 p-4 border border-gray-600">
               {renderContent()}
             </div>
-          </BorderedContainer>
+          </InventoryBorderedContainer>
 
           {/* Right Column */}
           <div className="lg:col-span-2 max-h-[calc(100vh-8rem)] overflow-auto">
             {/* Item Container - Desktop Only */}
-            <BorderedContainer className="hidden lg:block bg-gray-900 mb-2 p-0">
+            <InventoryBorderedContainer className="hidden lg:block bg-gray-900 mb-2 p-0">
               <div className="flex justify-center items-center aspect-square">
                 <img
                   src={`/${
@@ -164,11 +167,11 @@ const PortfolioInterface = () => {
                   className="h-4/5 object-contain"
                 />
               </div>
-            </BorderedContainer>
+            </InventoryBorderedContainer>
 
             {/* Projects Grid */}
-            <BorderedContainer className="bg-gray-900 p-0">
-              <div className="grid grid-cols-3 lg:grid-cols-2 gap-1 max-h-[60vh] lg:max-h-[calc(100vh-16rem)] overflow-y-auto">
+            <InventoryBorderedContainer className="bg-gray-900 p-0">
+              <div className="grid grid-cols-3 lg:grid-cols-2 gap-2 max-h-[60vh] lg:max-h-[calc(100vh-16rem)] overflow-y-auto">
                 {loading
                   ? [...Array(6)].map((_, i) => (
                       <div
@@ -194,12 +197,12 @@ const PortfolioInterface = () => {
                       </div>
                     ))}
               </div>
-            </BorderedContainer>
+            </InventoryBorderedContainer>
           </div>
         </div>
       </div>
 
-      <Modal
+      <InventoryModal
         isOpen={showOptions}
         onClose={() => setShowOptions(false)}
         title="OPTIONS"
@@ -214,7 +217,7 @@ const PortfolioInterface = () => {
             <input type="range" className="w-full" />
           </div>
         </div>
-      </Modal>
+      </InventoryModal>
     </div>
   );
 };

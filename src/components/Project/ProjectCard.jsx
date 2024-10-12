@@ -24,7 +24,7 @@ const ProjectCard = ({ project, onClick }) => {
 
       {/* Project Description - Hidden by default, shown on hover */}
       <div className="absolute inset-0 bg-gray-800 bg-opacity-90 p-2 translate-y-full group-hover:translate-y-0 transition-transform duration-200">
-        <p className="text-[10px] lg:text-xs text-gray-300 line-clamp-4 lg:line-clamp-6">
+        <p className="text-[10px] lg:text-xs text-gray-300 line-clamp-4 lg:line-clamp-4">
           {project.description || "No description available"}
         </p>
       </div>

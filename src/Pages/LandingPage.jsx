@@ -9,7 +9,7 @@ const LandingPage = () => {
   const handleStart = () => {
     if (username.trim() !== "") {
       //Usernames and characters are passed as state to the next page
-      navigate("/Inventory", { state: { username, character } });
+      navigate("/Portfolio", { state: { username, character } });
     }
   };
 
