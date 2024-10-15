@@ -1,32 +1,30 @@
 import React from "react";
 
-// Responsive burger menu button
 const BurgerMenu = ({ isOpen, onToggle }) => {
   return (
     <button
-      className="p-2 hover:bg-gray-800 rounded transition-colors md:hidden"
+      className="relative group"
       onClick={onToggle}
-      aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
+      aria-label="Toggle menu"
     >
-      <div className="space-y-1.5">
-        <span
-          className={`
-              block w-6 h-0.5 bg-gray-300 transition-transform transform
-              ${isOpen ? "rotate-45 translate-y-2" : ""}
-            `}
-        />
-        <span
-          className={`
-              block w-6 h-0.5 bg-gray-300 transition-opacity
-              ${isOpen ? "opacity-0" : ""}
-            `}
-        />
-        <span
-          className={`
-              block w-6 h-0.5 bg-gray-300 transition-transform transform
-              ${isOpen ? "-rotate-45 -translate-y-2" : ""}
-            `}
-        />
+      <div className="relative flex overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all ring-0 ring-gray-300 hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md">
+        <div className="flex flex-col justify-between w-[20px] h-[20px] transform transition-all duration-300 origin-center overflow-hidden">
+          <div
+            className={`bg-[rgb(31,41,55)] h-[2px] w-7 transform transition-all duration-300 origin-left ${
+              isOpen ? "rotate-[42deg] translate-y-6" : ""
+            }`}
+          />
+          <div
+            className={`bg-[rgb(31,41,55)] h-[2px] w-7 rounded transform transition-all duration-300 ${
+              isOpen ? "opacity-0" : ""
+            }`}
+          />
+          <div
+            className={`bg-[rgb(31,41,55)] h-[2px] w-7 transform transition-all duration-300 origin-left ${
+              isOpen ? "-rotate-[42deg] -translate-y-6" : ""
+            }`}
+          />
+        </div>
       </div>
     </button>
   );

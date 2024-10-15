@@ -9,6 +9,7 @@ import {
 import ProjectCard from "../components/Project/ProjectCard";
 import ProjectDetails from "../components/Project/ProjectDetails";
 import { useGithubProjects } from "../hooks/useGithubProjects";
+import ContactForm from "../components/Contact/ContactForm";
 
 const PortfolioInterface = () => {
   const location = useLocation();
@@ -49,6 +50,8 @@ const PortfolioInterface = () => {
             </p>
           </div>
         );
+      case "contact":
+        return <ContactForm />;
       default:
         return null;
     }
@@ -111,8 +114,8 @@ const PortfolioInterface = () => {
   );
 
   return (
-    <div className="bg-black text-gray-300 min-h-screen font-mono">
-      <div className="container mx-auto p-2 lg:p-4">
+    <div className="bg-black text-gray-300 min-h-screen font-mono flex items-center justify-center">
+      <div className="container mx-auto p-2 lg:p-4 max-w-7xl">
         {/* Navbar */}
         <InventoryBorderedContainer className="bg-gray-900 mb-2 p-0">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between p-2">
