@@ -44,9 +44,13 @@ const PortfolioInterface = () => {
           <div>
             <h2 className="text-xl mb-4">À PROPOS</h2>
             <p className="font-mono">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Doloremque iste dicta dolorem quaerat perspiciatis soluta amet est
-              inventore voluptas magnam rerum iusto.
+              En reconversion professionnel sur la formation Intégrateur web
+              (front-end) OpenClassRooms. Ce portfolio est la dernière étape de
+              mon parcours. Vous pourrez y retrouvez une sélection de mes
+              projets réalisés tout au long de mon parcours ainsi que les
+              compétences travaillés et un formulaire de contact (mockup). Ce
+              portfolio est inspiré de l'inventaire des jeux vidéos Resident
+              Evil et plus particulièrement de celui du deuxième opus (1998).
             </p>
           </div>
         );

@@ -7,7 +7,7 @@ export const useGithubProjects = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProject = async (owner, repo) => {
+    const fetchProject = async (owner, repo, customInfo) => {
       try {
         const response = await fetch(
           `https://api.github.com/repos/${owner}/${repo}`,
@@ -25,7 +25,21 @@ export const useGithubProjects = () => {
           throw new Error(`Failed to fetch ${repo}: ${response.status}`);
         }
 
-        return await response.json();
+        const githubData = await response.json();
+
+        return {
+          id: githubData.id,
+          name: githubData.name,
+          description: githubData.description,
+          language: githubData.language,
+          stars: githubData.stargazers_count,
+          forks: githubData.forks_count,
+          url: githubData.html_url,
+          homepage: githubData.homepage,
+          topics: githubData.topics,
+          //  Customized informations found in the config
+          customInfo: customInfo,
+        };
       } catch (err) {
         console.error(`Error fetching ${repo}:`, err);
         return null;
@@ -34,8 +48,8 @@ export const useGithubProjects = () => {
 
     const fetchAllProjects = async () => {
       try {
-        const projectPromises = GITHUB_REPOS.map(({ owner, repo }) =>
-          fetchProject(owner, repo)
+        const projectPromises = GITHUB_REPOS.map(
+          ({ owner, repo, customInfo }) => fetchProject(owner, repo, customInfo)
         );
 
         const results = await Promise.allSettled(projectPromises);
@@ -44,20 +58,7 @@ export const useGithubProjects = () => {
           .filter(
             (result) => result.status === "fulfilled" && result.value !== null
           )
-          .map((result) => {
-            const repo = result.value;
-            return {
-              id: repo.id,
-              name: repo.name,
-              description: repo.description,
-              language: repo.language,
-              stars: repo.stargazers_count,
-              forks: repo.forks_count,
-              url: repo.html_url,
-              homepage: repo.homepage,
-              topics: repo.topics,
-            };
-          });
+          .map((result) => result.value);
 
         setProjects(formattedProjects);
         setError(null);
