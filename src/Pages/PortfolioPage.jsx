@@ -10,6 +10,7 @@ import ProjectCard from "../components/Project/ProjectCard";
 import ProjectDetails from "../components/Project/ProjectDetails";
 import { useGithubProjects } from "../hooks/useGithubProjects";
 import ContactForm from "../components/Contact/ContactForm";
+import ProjectPreview from "../components/Project/ProjectPreview";
 
 const PortfolioInterface = () => {
   const location = useLocation();
@@ -52,6 +53,22 @@ const PortfolioInterface = () => {
               portfolio est inspiré de l'inventaire des jeux vidéos Resident
               Evil et plus particulièrement de celui du deuxième opus (1998).
             </p>
+          </div>
+        );
+      case "skills":
+        return (
+          <div>
+            <h2 className="text-xl mb-4">COMPETENCES</h2>
+            <ul className="list-disc list-inside">
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+              <li>React</li>
+              <li>Vite</li>
+              <li>Redux</li>
+              <li>GitHub</li>
+              <li>VSCode</li>
+            </ul>
           </div>
         );
       case "contact":
@@ -163,17 +180,21 @@ const PortfolioInterface = () => {
           <div className="lg:col-span-2 max-h-[calc(100vh-8rem)] overflow-auto">
             {/* Item Container - Desktop Only */}
             <InventoryBorderedContainer className="hidden lg:block bg-gray-900 mb-2 p-0">
-              <div className="flex justify-center items-center aspect-square">
-                <img
-                  src={`/${
-                    character.toLowerCase() === "leon"
-                      ? "lighter.webp"
-                      : "lockpick.webp"
-                  }`}
-                  alt="Default item"
-                  className="h-4/5 object-contain"
-                />
-              </div>
+              {selectedProject ? (
+                <ProjectPreview project={selectedProject} />
+              ) : (
+                <div className="flex justify-center items-center aspect-square">
+                  <img
+                    src={`/${
+                      character.toLowerCase() === "leon"
+                        ? "lighter.webp"
+                        : "lockpick.webp"
+                    }`}
+                    alt="Default item"
+                    className="h-4/5 object-contain"
+                  />
+                </div>
+              )}
             </InventoryBorderedContainer>
 
             {/* Projects Grid */}
@@ -200,6 +221,8 @@ const PortfolioInterface = () => {
                         <ProjectCard
                           project={project}
                           onClick={handleProjectSelect}
+                          isSelected={selectedProject?.id === project.id}
+                          w
                         />
                       </div>
                     ))}

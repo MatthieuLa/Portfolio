@@ -77,7 +77,7 @@ const ProjectDetails = ({ project }) => {
             <h3 className="text-lg font-semibold mb-2">
               Objectifs pédagogiques
             </h3>
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="pl-5 space-y-1">
               {customInfo.features.map((feature, index) => (
                 <li key={index}>{feature}</li>
               ))}
