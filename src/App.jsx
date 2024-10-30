@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className="w-full h-screen mx-auto overflow-hidden">
+        <div className="w-full h-screen mx-auto overflow-auto">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/Portfolio" element={<PortfolioPage />} />

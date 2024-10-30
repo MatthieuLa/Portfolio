@@ -59,15 +59,47 @@ const PortfolioInterface = () => {
         return (
           <div>
             <h2 className="text-xl mb-4">COMPETENCES</h2>
-            <ul className="list-disc list-inside">
-              <li>HTML</li>
-              <li>CSS</li>
-              <li>JavaScript</li>
-              <li>React</li>
-              <li>Vite</li>
-              <li>Redux</li>
-              <li>GitHub</li>
-              <li>VSCode</li>
+            <ul>
+              <br />
+              <li>
+                <strong>HTML</strong> - Acquéris avec la formation OC -{" "}
+                <i>inférieur à 1 ans</i>
+              </li>
+              <br />
+              <li>
+                <strong>CSS</strong> - Acquéris avec la formation OC -{" "}
+                <i>inférieur à 1 ans</i>
+              </li>
+              <br />
+              <li>
+                <strong>JavaScript</strong> - Acquéris avec la formation OC -{" "}
+                <i>inférieur à 1 ans</i>
+              </li>
+              <br />
+              <li>
+                <strong>React</strong> - Acquéris avec la formation OC -{" "}
+                <i>inférieur à 1 ans</i>
+              </li>
+              <br />
+              <li>
+                <strong>Vite</strong> - Acquéris avec la formation OC -{" "}
+                <i>inférieur à 1 ans</i>
+              </li>
+              <br />
+              <li>
+                <strong>Redux</strong> - Acquéris avec la formation OC -{" "}
+                <i>inférieur à 1 ans</i>
+              </li>
+              <br />
+              <li>
+                <strong>GitHub</strong> - Acquéris avec la formation OC -{" "}
+                <i>inférieur à 1 ans</i>
+              </li>
+              <br />
+              <li>
+                <strong>VSCode</strong> - Acquéris avec la formation OC -{" "}
+                <i>inférieur à 1 ans</i>
+              </li>
             </ul>
           </div>
         );
@@ -136,7 +168,7 @@ const PortfolioInterface = () => {
 
   return (
     <div className="bg-black text-gray-300 min-h-screen font-mono flex items-center justify-center">
-      <div className="container mx-auto p-2 lg:p-4 max-w-7xl">
+      <div className=" self-start container mx-auto p-2 lg:p-4 max-w-7xl">
         {/* Navbar */}
         <InventoryBorderedContainer className="bg-gray-900 mb-2 p-0">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between p-2">

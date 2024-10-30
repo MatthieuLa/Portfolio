@@ -50,7 +50,7 @@ export const GITHUB_REPOS = [
     customInfo: {
       title: "Kasa, location d'appartements",
       context: "Formation OpenClassrooms intégrateur web - Projet 7",
-      technologies: ["HTML", "SASS", "Vite + React"],
+      technologies: ["HTML", "SASS", "React + Vite"],
       features: [
         "Initialiser une application avec Create React App",
         "Configurer la navigation entre les pages de l'application avec React Router",
@@ -79,7 +79,7 @@ export const GITHUB_REPOS = [
     customInfo: {
       title: "Argent Bank, implétation front-end",
       context: "Formation OpenClassrooms intégrateur web - Projet 10",
-      technologies: ["Redux + React", "Routes api swagger"],
+      technologies: ["React + Redux", "Swagger"],
       features: [
         "Afficher les données du back end sur l'interface via des appels API",
         "Configurer des routes API pour la communication client / serveur",
