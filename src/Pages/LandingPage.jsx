@@ -7,10 +7,8 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    if (username.trim() !== "") {
-      //Usernames and characters are passed as state to the next page
-      navigate("/Portfolio", { state: { username, character } });
-    }
+    //Usernames and characters are passed as state to the next page
+    navigate("/Portfolio", { state: { character } });
   };
 
   return (
@@ -24,8 +22,8 @@ const LandingPage = () => {
           <label className="block mb-2">Nom d'utilisateur:</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value="Matthieu"
+            disabled
             className="w-full bg-gray-800 border border-gray-700 p-2 text-white"
           />
         </div>

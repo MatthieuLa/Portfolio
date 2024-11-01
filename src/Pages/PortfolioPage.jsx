@@ -15,7 +15,7 @@ import ProjectPreview from "../components/Project/ProjectPreview";
 const PortfolioInterface = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { username = "User", character = "Leon" } = location.state || {};
+  const { username = "Matthieu", character = "Leon" } = location.state || {};
   const [selectedProject, setSelectedProject] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
   const [currentSection, setCurrentSection] = useState("about");
@@ -45,13 +45,14 @@ const PortfolioInterface = () => {
           <div>
             <h2 className="text-xl mb-4">À PROPOS</h2>
             <p className="font-mono">
-              En reconversion professionnel sur la formation Intégrateur web
-              (front-end) OpenClassRooms. Ce portfolio est la dernière étape de
-              mon parcours. Vous pourrez y retrouvez une sélection de mes
-              projets réalisés tout au long de mon parcours ainsi que les
-              compétences travaillés et un formulaire de contact (mockup). Ce
-              portfolio est inspiré de l'inventaire des jeux vidéos Resident
-              Evil et plus particulièrement de celui du deuxième opus (1998).
+              Matthieu; en reconversion professionnel sur la formation
+              Intégrateur web (front-end) OpenClassRooms. Ce portfolio est la
+              dernière étape de mon parcours. Vous pourrez y retrouvez une
+              sélection de mes projets réalisés tout au long de mon parcours
+              ainsi que les compétences travaillés et un formulaire de contact
+              (mockup). Ce portfolio est inspiré de l'inventaire des jeux vidéos
+              Resident Evil et plus particulièrement de celui du deuxième opus
+              (1998).
             </p>
           </div>
         );
@@ -174,7 +175,7 @@ const PortfolioInterface = () => {
           <div className="flex flex-col lg:flex-row lg:items-center justify-between p-2">
             <div className="flex justify-between items-center">
               <h1 className="text-red-700 text-xl lg:text-2xl font-bold">
-                RESIDENT FOLIO
+                MattieuLa's Portfolio
               </h1>
               <button
                 className="lg:hidden"

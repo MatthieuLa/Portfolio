@@ -23,7 +23,7 @@ const ProjectPreviewModal = ({ isOpen, onClose, imageSrc, projectName }) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="relative h-[90vh] w-full max-w-4xl bg-gray-900 border border-gray-600  flex self-center flex-col">
+      <div className="relative max-h-[90vh] overflow-visible  w-full max-w-4xl bg-gray-900 border border-gray-600  flex self-center flex-col">
         {/* Header fixed*/}
         <div className="sticky top-0 flex justify-between items-center p-4 bg-gray-900 border-b border-gray-600">
           <h3 className="text-xl text-white">{projectName}</h3>

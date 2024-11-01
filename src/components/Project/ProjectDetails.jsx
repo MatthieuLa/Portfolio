@@ -14,7 +14,7 @@ const ProjectDetails = ({ project }) => {
     <div className="space-y-6">
       <div className="flex justify-between items-start">
         <div>
-          <h2 className="text-xl font-bold">
+          <h2 className="text-xl font-bold text-left  ">
             {customInfo?.title || project.name}
           </h2>
           {customInfo?.context && (
