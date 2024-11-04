@@ -61,6 +61,7 @@ button:focus-visible {
 }
 .relative
 /* Monitor Line*/
+/* Monitor Line */
 @keyframes pulse-line {
   0% {
     transform: translateX(0);
@@ -91,7 +92,6 @@ button:focus-visible {
   animation: pulse-line-echo 3s linear infinite;
 }
 
-/* CRT effect*/
 .condition-monitor::before {
   content: "";
   position: absolute;
@@ -100,9 +100,10 @@ button:focus-visible {
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(0, 255, 0, 0.2),
+    currentColor,
     transparent
   );
+  opacity: 0.2;
   animation: scan-line 2s linear infinite;
 }
 
@@ -115,12 +116,14 @@ button:focus-visible {
   }
 }
 
-/* Blinking effect*/
 .condition-monitor::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.01));
+  background: linear-gradient(
+    rgba(var(--monitor-color-rgb), 0.02),
+    rgba(var(--monitor-color-rgb), 0.01)
+  );
   animation: flicker 0.15s infinite alternate;
 }
 

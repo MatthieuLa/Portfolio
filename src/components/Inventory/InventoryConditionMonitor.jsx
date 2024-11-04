@@ -1,49 +1,63 @@
+// src/components/Inventory/InventoryConditionMonitor.jsx
 import React, { useEffect, useState, useCallback } from "react";
 
-const ConditionMonitor = () => {
+const InventoryConditionMonitor = ({ status = "fine" }) => {
   const [path, setPath] = useState("");
+
+  const statusStyles = {
+    fine: {
+      color: "text-green-500",
+      label: "Fine",
+    },
+    caution: {
+      color: "text-yellow-500",
+      label: "Caution",
+    },
+    warning: {
+      color: "text-orange-500",
+      label: "Warning",
+    },
+    danger: {
+      color: "text-red-500",
+      label: "Danger",
+    },
+  };
 
   const generateRandomPath = useCallback(() => {
     const width = 200;
     const baselineY = 50;
     const points = [];
 
-    // Fonction pour générer un pic
     const generatePeak = (startX) => {
-      const peakHeight = Math.random() * 20 + 10; // Hauteur aléatoire entre 10 et 30
-      const segmentWidth = 15; // Largeur fixe pour chaque segment du pic
+      const peakHeight = Math.random() * 20 + 10;
+      const segmentWidth = 15;
 
       return [
-        [startX, baselineY], // Point de départ
-        [startX + segmentWidth * 0.2, baselineY], // Petit plateau
-        [startX + segmentWidth * 0.3, baselineY - peakHeight], // Montée rapide
-        [startX + segmentWidth * 0.4, baselineY + peakHeight * 0.3], // Descente
-        [startX + segmentWidth * 0.5, baselineY - peakHeight * 0.2], // Rebond
-        [startX + segmentWidth * 0.7, baselineY], // Retour à la ligne de base
-        [startX + segmentWidth, baselineY], // Fin du segment
+        [startX, baselineY],
+        [startX + segmentWidth * 0.2, baselineY],
+        [startX + segmentWidth * 0.3, baselineY - peakHeight],
+        [startX + segmentWidth * 0.4, baselineY + peakHeight * 0.3],
+        [startX + segmentWidth * 0.5, baselineY - peakHeight * 0.2],
+        [startX + segmentWidth * 0.7, baselineY],
+        [startX + segmentWidth, baselineY],
       ];
     };
 
-    // Génération du chemin complet
     let currentX = 0;
     while (currentX < width) {
       if (currentX === 0) {
-        // Straight start
         points.push([0, baselineY]);
         currentX += 20;
       } else if (currentX > width - 30) {
-        // Straight end
         points.push([width, baselineY]);
         break;
       } else {
-        // Peaks generation
         const peakPoints = generatePeak(currentX);
         points.push(...peakPoints);
-        currentX += 65; // Spacing between peaks
+        currentX += 65;
       }
     }
 
-    // Création du path SVG avec des lignes droites
     const pathCommands = points.map((point, index) => {
       if (index === 0) return `M ${point[0]},${point[1]}`;
       return `L ${point[0]},${point[1]}`;
@@ -61,7 +75,9 @@ const ConditionMonitor = () => {
   }, [generateRandomPath]);
 
   return (
-    <div className="text-green-500 font-mono">
+    <div
+      className={`${statusStyles[status].color} font-mono transition-colors duration-300`}
+    >
       CONDITION
       <div className="mt-2 h-[100px] border border-gray-700 bg-gray-800/50 relative overflow-hidden">
         <div className="absolute inset-0 condition-monitor" />
@@ -70,7 +86,6 @@ const ConditionMonitor = () => {
           viewBox="0 0 200 100"
           preserveAspectRatio="none"
         >
-          {/* Ligne principale */}
           <path
             d={path}
             fill="none"
@@ -78,8 +93,6 @@ const ConditionMonitor = () => {
             strokeWidth="1"
             className="animate-pulse-line"
           />
-
-          {/* Echo de la ligne */}
           <path
             d={path}
             fill="none"
@@ -89,10 +102,12 @@ const ConditionMonitor = () => {
             style={{ opacity: 0.3 }}
           />
         </svg>
-        <div className="absolute bottom-2 right-2 text-xs">Fine</div>
+        <div className="absolute bottom-2 right-2 text-xs">
+          {statusStyles[status].label}
+        </div>
       </div>
     </div>
   );
 };
 
-export default ConditionMonitor;
+export default InventoryConditionMonitor;

@@ -11,6 +11,7 @@ import ProjectDetails from "../components/Project/ProjectDetails";
 import { useGithubProjects } from "../hooks/useGithubProjects";
 import ContactForm from "../components/Contact/ContactForm";
 import ProjectPreview from "../components/Project/ProjectPreview";
+import InventorySkills from "../components/Inventory/InventorySkills";
 
 const PortfolioInterface = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const PortfolioInterface = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [currentSection, setCurrentSection] = useState("about");
   const [showMenu, setShowMenu] = useState(false);
+  const [selectedSkill, setSelectedSkill] = useState(null);
 
   const { projects, loading, error } = useGithubProjects("MatthieuLa");
 
@@ -32,6 +34,10 @@ const PortfolioInterface = () => {
   const handleProjectSelect = (project) => {
     setSelectedProject(project);
     setCurrentSection("project");
+  };
+
+  const handleSkillSelect = (skill) => {
+    setSelectedSkill(skill === selectedSkill ? null : skill);
   };
 
   const renderContent = () => {
@@ -58,51 +64,10 @@ const PortfolioInterface = () => {
         );
       case "skills":
         return (
-          <div>
-            <h2 className="text-xl mb-4">COMPETENCES</h2>
-            <ul>
-              <br />
-              <li>
-                <strong>HTML</strong> - Acquéris avec la formation OC -{" "}
-                <i>inférieur à 1 ans</i>
-              </li>
-              <br />
-              <li>
-                <strong>CSS</strong> - Acquéris avec la formation OC -{" "}
-                <i>inférieur à 1 ans</i>
-              </li>
-              <br />
-              <li>
-                <strong>JavaScript</strong> - Acquéris avec la formation OC -{" "}
-                <i>inférieur à 1 ans</i>
-              </li>
-              <br />
-              <li>
-                <strong>React</strong> - Acquéris avec la formation OC -{" "}
-                <i>inférieur à 1 ans</i>
-              </li>
-              <br />
-              <li>
-                <strong>Vite</strong> - Acquéris avec la formation OC -{" "}
-                <i>inférieur à 1 ans</i>
-              </li>
-              <br />
-              <li>
-                <strong>Redux</strong> - Acquéris avec la formation OC -{" "}
-                <i>inférieur à 1 ans</i>
-              </li>
-              <br />
-              <li>
-                <strong>GitHub</strong> - Acquéris avec la formation OC -{" "}
-                <i>inférieur à 1 ans</i>
-              </li>
-              <br />
-              <li>
-                <strong>VSCode</strong> - Acquéris avec la formation OC -{" "}
-                <i>inférieur à 1 ans</i>
-              </li>
-            </ul>
-          </div>
+          <InventorySkills
+            onSkillSelect={handleSkillSelect}
+            selectedSkill={selectedSkill}
+          />
         );
       case "contact":
         return <ContactForm />;
@@ -110,6 +75,27 @@ const PortfolioInterface = () => {
         return null;
     }
   };
+
+  const renderCharacterInfo = () => (
+    <InventoryBorderedContainer className="bg-gray-900 p-0">
+      <div className="flex flex-col items-center justify-center p-2">
+        <span className="text-sm mb-1">{username.toUpperCase()}</span>
+        <div className="w-20 h-20 lg:w-24 lg:h-24 bg-gray-800 border border-gray-600">
+          <img
+            src={`/${character.toLowerCase()}.webp`}
+            alt={character}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </InventoryBorderedContainer>
+  );
+
+  const renderConditionStatus = () => (
+    <InventoryBorderedContainer className="bg-gray-900 p-0">
+      <InventoryConditionMonitor status={selectedSkill?.level || "fine"} />
+    </InventoryBorderedContainer>
+  );
 
   const renderNavButtons = () => (
     <>
@@ -134,42 +120,16 @@ const PortfolioInterface = () => {
       >
         CONTACT
       </InventoryMenuButton>
-      <InventoryMenuButton
-        onClick={() => setShowOptions(true)}
-        className="text-sm"
-      >
-        OPTIONS
-      </InventoryMenuButton>
+
       <InventoryMenuButton onClick={() => navigate("/")} className="text-sm">
         EXIT
       </InventoryMenuButton>
     </>
   );
 
-  const renderCharacterInfo = () => (
-    <InventoryBorderedContainer className="bg-gray-900 p-0">
-      <div className="flex flex-col items-center justify-center p-2">
-        <span className="text-sm mb-1">{username.toUpperCase()}</span>
-        <div className="w-20 h-20 lg:w-24 lg:h-24 bg-gray-800 border border-gray-600">
-          <img
-            src={`/${character.toLowerCase()}.webp`}
-            alt={character}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
-    </InventoryBorderedContainer>
-  );
-
-  const renderConditionMonitor = () => (
-    <InventoryBorderedContainer className="bg-gray-900 p-0">
-      <InventoryConditionMonitor />
-    </InventoryBorderedContainer>
-  );
-
   return (
     <div className="bg-black text-gray-300 min-h-screen font-mono flex items-center justify-center">
-      <div className=" self-start container mx-auto p-2 lg:p-4 max-w-7xl">
+      <div className="self-center container mx-auto p-2 lg:p-4 max-w-7xl">
         {/* Navbar */}
         <InventoryBorderedContainer className="bg-gray-900 mb-2 p-0">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between p-2">
@@ -199,7 +159,7 @@ const PortfolioInterface = () => {
           {/* Left Column - Mobile Top Row */}
           <div className="grid grid-cols-2 gap-2 lg:grid-cols-1 lg:col-span-2">
             {renderCharacterInfo()}
-            {renderConditionMonitor()}
+            {renderConditionStatus()}
           </div>
 
           {/* Center Content */}
@@ -232,7 +192,7 @@ const PortfolioInterface = () => {
 
             {/* Projects Grid */}
             <InventoryBorderedContainer className="bg-gray-900 p-0">
-              <div className="grid grid-cols-3 lg:grid-cols-2 gap-2 max-h-[60vh] lg:max-h-[calc(100vh-16rem)] overflow-y-auto">
+              <div className="grid grid-cols-3 lg:grid-cols-2 gap-2 max-h-[60vh] lg:max-h-[calc(100vh-16rem)] overflow-y-auto p-2">
                 {loading
                   ? [...Array(6)].map((_, i) => (
                       <div
@@ -255,7 +215,6 @@ const PortfolioInterface = () => {
                           project={project}
                           onClick={handleProjectSelect}
                           isSelected={selectedProject?.id === project.id}
-                          w
                         />
                       </div>
                     ))}

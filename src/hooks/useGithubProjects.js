@@ -12,10 +12,7 @@ export const useGithubProjects = () => {
         const response = await fetch(
           `https://api.github.com/repos/${owner}/${repo}`,
           {
-            headers: {
-              Authorization: `token ${GITHUB_TOKEN}`,
-              Accept: "application/vnd.github.v3+json",
-            },
+            headers: {},
           }
         );
 

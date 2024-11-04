@@ -15,7 +15,7 @@ const LandingPage = () => {
     <div className="h-screen bg-black flex items-center justify-center">
       <div className="w-96 bg-gray-900 border-2 border-gray-700 p-8 text-gray-300 font-mono">
         <h1 className="text-2xl mb-6 text-red-600 text-center">
-          Resident Folio
+          MatthieuLa's Folio
         </h1>
 
         <div className="mb-6">
